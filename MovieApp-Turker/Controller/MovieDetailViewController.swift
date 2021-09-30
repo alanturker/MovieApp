@@ -13,6 +13,7 @@ class MovieDetailViewController: UIViewController {
     @IBOutlet private weak var rateLabel: UILabel!
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var collectionView: UICollectionView!
+    @IBOutlet private weak var overViewText: UITextView!
     
     var castArray: [Cast]?
     var selectedMovie: Movie!
@@ -52,12 +53,13 @@ extension MovieDetailViewController {
         backDropImage.fetchImage(from: "https://image.tmdb.org/t/p/original\(selectedMovie.backDrop ?? "")")
         rateLabel.text = String(format: "%.1f", selectedMovie.rate ?? 0.0)
         titleLabel.text = selectedMovie.title
+        overViewText.text = selectedMovie.overview
     }
 }
 
 
-//MARK: - CollectionView Delegate & Datasource Methods
-extension MovieDetailViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+//MARK: - CollectionView Delegate & Datasource Methods & FlowLayout Methods
+extension MovieDetailViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return castArray?.count ?? 0
@@ -72,7 +74,9 @@ extension MovieDetailViewController: UICollectionViewDelegate, UICollectionViewD
         return cell
     }
     
-   
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 1
+    }
     
     
 }
